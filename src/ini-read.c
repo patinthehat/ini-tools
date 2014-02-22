@@ -24,7 +24,7 @@ int main (int argc, char *argv[]) {
   name = argv[2];
   inifn = argv[3];
 
-  n = ini_gets(section, name, "defval", databuf, sizeof(databuf), inifn);
+  n = ini_gets(section, name, "", databuf, sizeof(databuf), inifn);
   printf("%s", databuf);
 
   return 0;
