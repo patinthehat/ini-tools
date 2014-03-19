@@ -10,11 +10,24 @@
 
 #define APP_TITLE "ini-write"
 
+
+int show_usage () {
+    printf("Usage: %s [-b|--bool] section keyname value filename\n", APP_TITLE);
+    return -1;
+}
+
+void show_help () {
+
+}
+
 int main (int argc, char *argv[]) {
-  char databuf[255];
+  char databuf[BUFFER_SIZE];
   long n;
   int ret;
   char *section, *name, *value, *inifn;
+
+  if (argc <= 1)
+    return show_usage();
 
   if (argc == 2 && (strncmp(argv[1], "-V", 2)==0 || strncmp(argv[1], "--version", 9) == 0)) {
     printf("%s v%s %s\n", APP_TITLE, APP_VERSION, BUILD_DATE);

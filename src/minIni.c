@@ -20,6 +20,11 @@
  *  Version: $Id: minIni.c 45 2012-05-14 11:53:09Z thiadmer.riemersma $
  */
 
+/*
+ * minIni - @source https://code.google.com/p/minini/
+ * version used: 1.2b, Dec 2012
+ */
+
 #if (defined _UNICODE || defined __UNICODE__ || defined UNICODE) && !defined MININI_ANSI
 # if !defined UNICODE   /* for Windows */
 #   define UNICODE

@@ -16,6 +16,10 @@
  *
  *  Version: $Id: minIni.h 44 2012-01-04 15:52:56Z thiadmer.riemersma@gmail.com $
  */
+/*
+ * minIni - @source https://code.google.com/p/minini/
+ * version used: 1.2b, Dec 2012
+ */
 #ifndef MININI_H
 #define MININI_H
 

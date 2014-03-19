@@ -1,0 +1,8 @@
+
+.cproject
+.project
+.settings/
+build/
+buildstrs.c
+*.o
+*.a
