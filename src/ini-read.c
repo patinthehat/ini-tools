@@ -12,7 +12,7 @@
 int show_usage (char *THIS_FILE_NAME) {
     //show the actual name of this file for usage info, even if it was changed from the default
     printf("Usage: %s [-b|--bool] section keyname filename\n  --bool reads a boolean and returns an int.\n", THIS_FILE_NAME);
-    return -1;
+    return EXIT_FAILURE;
 }
 
 
@@ -40,7 +40,7 @@ int main (int argc, char *argv[]) {
     return 0;
   }
 
-  if (argc >= 4 && (strncmp(argv[1], "-b", 2)==0 || strncmp(argv[1], "--bool", 6) == 0)) {
+  if (argc >= 2 && (strncmp(argv[1], "-b", 2)==0 || strncmp(argv[1], "--bool", 6) == 0)) {
     section = argv[2];
     name = argv[3];
     inifn = argv[4];
@@ -80,5 +80,5 @@ int main (int argc, char *argv[]) {
 
   printf("%s", databuf);
 
-  return 0;
+  return EXIT_SUCCESS;
 }

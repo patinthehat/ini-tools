@@ -13,7 +13,7 @@
 
 int show_usage () {
     printf("Usage: %s [-b|--bool] section keyname value filename\n", APP_TITLE);
-    return -1;
+    return EXIT_FAILURE;
 }
 
 void show_help () {
@@ -42,9 +42,9 @@ int main (int argc, char *argv[]) {
   inifn = argv[4];
 
   n = ini_puts(section, name, value, inifn);
-  ret = 0;
+  ret = EXIT_SUCCESS;
   if (n == 0) 
-    ret = -1;
+    ret = EXIT_FAILURE;
   //printf("%s", databuf);
   return ret;
 }
