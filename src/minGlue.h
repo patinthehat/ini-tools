@@ -12,7 +12,7 @@
 #include <stdio.h>
 #define NDEBUG 1
 #define INI_LINETERM "\n"
-#define INI_BUFFERSIZE 1024
+#define INI_BUFFERSIZE 1024 * 2
 
 #define INI_FILETYPE                  FILE*
 #define ini_openread(filename,file)   ((*(file) = fopen((filename),"rb")) != NULL)

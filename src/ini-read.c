@@ -21,6 +21,7 @@ int show_usage (char *THIS_FILE_NAME) {
 int main (int argc, char *argv[]) {
   char databuf[BUFFER_SIZE];
 
+  memset(databuf, 0, sizeof(databuf));
 
   long n;
   int nn;
@@ -28,6 +29,8 @@ int main (int argc, char *argv[]) {
 
   char* const THIS_FILE_NAME = strrchr(argv[0], '/') ? strrchr(argv[0], '/') + 1 : argv[0];
   char* const THIS_FILE_EXT = strrchr(THIS_FILE_NAME, '.') ? strrchr(THIS_FILE_NAME, '.') : THIS_FILE_NAME;
+
+  char* const DEFAULT_VALUE = "";
 
   if (argc <= 1)
     return show_usage(THIS_FILE_NAME);
@@ -37,11 +40,15 @@ int main (int argc, char *argv[]) {
     return 0;
   }
 
-  if (argc >= 2 && (strncmp(argv[1], "-b", 2)==0 || strncmp(argv[1], "--bool", 6) == 0)) {
+  if (argc >= 4 && (strncmp(argv[1], "-b", 2)==0 || strncmp(argv[1], "--bool", 6) == 0)) {
     section = argv[2];
     name = argv[3];
     inifn = argv[4];
-    n = ini_gets(section, name, "", databuf, sizeof(databuf), inifn);
+
+    if (!file_exist(inifn))
+      return show_error("file not found.");
+
+    n = ini_gets(section, name, DEFAULT_VALUE, databuf, sizeof(databuf), inifn);
 
     //default value
     nn = 0;
@@ -65,7 +72,10 @@ int main (int argc, char *argv[]) {
     name = argv[2];
     inifn = argv[3];
 
-    n = ini_gets(section, name, "", databuf, sizeof(databuf), inifn);
+    if (!file_exist(inifn))
+      return show_error("file not found.");
+
+    n = ini_gets(section, name, DEFAULT_VALUE, databuf, sizeof(databuf), inifn);
   }
 
   printf("%s", databuf);
