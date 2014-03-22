@@ -24,7 +24,7 @@ void application_init(int argc, char*argv[], int argc_global, char*argv_global[]
 /**
  * checks if a file exists.
  * @arg char* filename
- * returns true if given file exists, otherwise false.
+ * @return true if given file exists, otherwise false.
  */
 int file_exist (char *filename) {
 //  struct stat   buffer;
@@ -34,8 +34,10 @@ int file_exist (char *filename) {
   return FALSE;
 }
 
-/*
+/**
  * checks if specified file is readable.
+ * @arg char* filename
+ * @return int TRUE if readable, otherwise FALSE
  */
 int file_readable(char *filename) {
   if (access(filename, R_OK) == 0)
@@ -43,8 +45,10 @@ int file_readable(char *filename) {
   return FALSE;
 }
 
-/*
+/**
  * checks if specified file is writable.
+ * @arg char* filename
+ * @return int TRUE if writable, otherwise FALSE
  */
 int file_writable(char *filename) {
   if (access(filename, W_OK) == 0)
@@ -52,33 +56,49 @@ int file_writable(char *filename) {
   return FALSE;
 }
 
+/**
+ * displays version information
+ * @param APPLICATION_TITLE name of the application
+ * @param APPLICATION_VERSION version string to display
+ * @return int returns EXIT_SUCCESS
+ */
 int show_version(char * APPLICATION_TITLE, char * APPLICATION_VERSION) {
   printf("%s v%s %s\n", APPLICATION_TITLE, APPLICATION_VERSION, BUILD_DATE);
   return EXIT_SUCCESS;
 }
 
-/*
+/**
  * displays an error message and returns EXIT_FAILURE.
- * @returns int EXIT_FAILURE
+ * @param msg message to display
+ * @return int EXIT_FAILURE
  */
 int show_error(char *msg) {
-  printf("%s%s\n", STR_ERROR_PREFIX, msg);
+  fprintf(stderr, "%s%s\n", STR_ERROR_PREFIX, msg);
   return EXIT_FAILURE;
 }
 
-/*
+/**
  * displays an error message formatted with one argument and returns EXIT_FAILURE.
- * @returns int EXIT_FAILURE
+ * @param msgfmt
+ * @param arg
+ * @return int EXIT_FAILURE
  */
 int show_error_f1(char *msgfmt, void *arg) {
   char * buf;
   buf = malloc(strlen(msgfmt)+(sizeof(char)*11));
   sprintf(buf, "%s%s\n", STR_ERROR_PREFIX, msgfmt);
-  printf(buf, arg);
+  fprintf(stderr, buf, arg);
   free(buf);
   return EXIT_FAILURE;
 }
 
+/**
+ * checks an argv index against value
+ * @param argv argv from main
+ * @param argn index to check
+ * @param value value to compare
+ * @return int TRUE if argv[index] == value, otherwise FALSE
+ */
 int check_arg(char * argv[], int argn, char * value) {
   size_t slen = strlen(value);
   if (strncmp(argv[argn], value, slen )==0)
@@ -99,8 +119,6 @@ int check_arg_char_array_const(char *argv[], int index, char * const arr[], int 
     ret = ret || check_arg(argv, index, arr[i]);
   return ret;
 }
-
-
 
 int check_arg_flag(int index, enum application_flag flag) {
   switch(flag) {
@@ -182,12 +200,22 @@ char * get_app_name() { //char * argv[]) {
   return (char*)THIS_FILENAME;
 }
 
+/**
+ * checks validity of an ini section name
+ * @param sectionName
+ * @return int TRUE if sectionName is valid, FALSE otherwise
+ */
 int valid_section_name(char*sectionName) {
   if (sectionName == NULL || strlen(sectionName) == 0 || !sectionName)
     return FALSE;
   return TRUE;
 }
 
+/**
+ * checks validity of an ini key name
+ * @param keyName
+ * @return int TRUE if keyName is valid, FALSE otherwise
+ */
 int valid_key_name(char*keyName) {
   if (keyName == NULL || strlen(keyName) == 0 || !keyName)
     return FALSE;
