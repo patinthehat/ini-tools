@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-#include <sys/stat.h>
+//#include <sys/stat.h>
 
 #include "globals.h"
 #include "config.h"
@@ -158,6 +158,9 @@ int check_arg_flag(int index, enum application_flag flag) {
       break;
     case FLAG_BOOL:
       return check_arg_flag_bool(index);
+      break;
+    case FLAG_DUMP:
+      return check_arg_char_array(arg_v, 1, ARGS_DUMP, ARGS_DUMP_COUNT);
       break;
     default:
       return FALSE;
