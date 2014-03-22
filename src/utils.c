@@ -100,6 +100,24 @@ int check_arg_char_array_const(char *argv[], int index, char * const arr[], int 
   return ret;
 }
 
+
+
+int check_arg_flag(int index, enum application_flag flag) {
+  switch(flag) {
+    case FLAG_VERSION:
+      return check_arg_flag_version(index);
+      break;
+    case FLAG_HELP:
+      return check_arg_flag_help(index);
+      break;
+    case FLAG_BOOL:
+      return check_arg_flag_bool(index);
+      break;
+    default:
+      return FALSE;
+  }
+}
+
 int check_arg_flag_version(int index) {
   return check_arg_char_array(arg_v, index, ARGS_VERSION, ARGS_VERSION_COUNT);
 }

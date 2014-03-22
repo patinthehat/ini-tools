@@ -5,10 +5,9 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "build-date.h"
 #include "globals.h"
 #include "config.h"
-#include "build-date.h"
-
 #include "utils.h"
 #include "minIni.h"
 
@@ -18,7 +17,7 @@
 int show_usage (char *THIS_FILE_NAME) {
     //show the actual name of this file for usage info, even if it was changed from the default
     printf(
-        "* Usage: %s [-b|--bool|--boolean] section keyname filename\n" \
+        "* Usage: %s [-v|--version|-h|--help|(-b|--bool|--boolean)] section keyname filename\n" \
         "",
         THIS_FILE_NAME);
     return EXIT_FAILURE;
@@ -29,6 +28,8 @@ int show_help(char *THIS_FILE_NAME) {
   show_usage(THIS_FILE_NAME);
   printf(
         "* ======\n" \
+        "* -v|--version : shows version information\n" \
+        "* -h|--help : shows this help information\n" \
         "* -b|--bool|--boolean reads a boolean string and returns an int(0 or 1).\n" \
         "* 1 == TRUE, 0 == FALSE \n" \
         "* valid boolean strings are 'true','false','yes','no','on','off','1','0'\n" \
@@ -61,10 +62,10 @@ int main (int argc, char *argv[]) {
     if (bFlagBool==TRUE)
       return show_error(STR_ERR_NOT_ENOUGH_ARGS);
 
-    if (check_arg_flag_version(1))
+    if (check_arg_flag(1, FLAG_VERSION))
       return show_version(APP_TITLE, INI_TOOLS_VERSION);
 
-    if (check_arg_flag_help(1))
+    if (check_arg_flag(1, FLAG_HELP))
       return show_help( THIS_APP_FILENAME );
   }
 

@@ -6,10 +6,9 @@
 
 #include <sys/stat.h>
 
+#include "build-date.h"
 #include "globals.h"
 #include "config.h"
-#include "build-date.h"
-
 #include "utils.h"
 #include "minIni.h"
 
@@ -18,7 +17,7 @@
 
 int show_usage (char *THIS_FILE_NAME) {
     printf(
-        "* Usage: %s section keyname value filename\n" \
+        "* Usage: %s [-v|--version|-h|--help|--delete-(key|section)] section keyname value filename\n" \
         "",
            THIS_FILE_NAME);
     return EXIT_FAILURE;
@@ -29,19 +28,25 @@ int show_help () {
   show_usage(THIS_APP_FILENAME);
   printf(
       "* ======\n" \
+      "* -v|--version : shows version information\n" \
+      "* -h|--help : shows this help information\n" \
+      "* --delete-key : passing this will delete the specified key regardless of value specified. \n" \
+      "* --delete-section : passing this will delete the specified section regardless of key/value specified.\n" \
       "\n" \
+      "Writes value to section.keyname in the specified ini file.\n" \
       "%s",
       "");
   return EXIT_SUCCESS;
 }
 
 
+
 int main (int argc, char *argv[]) {
   char databuf[BUFFER_SIZE];
   char *section, *name, *value, *inifn;
   long n;
-  int ret;
-  int firstArgIndex = 1;
+  int ret, firstArgIndex = 1;
+  int bFlagDeleteSection = FALSE, bFlagDeleteKey = FALSE;
 
   application_init(argc, argv, arg_c, arg_v);
 
@@ -50,12 +55,23 @@ int main (int argc, char *argv[]) {
     return show_usage(THIS_APP_FILENAME);
   }
 
+
   if (argc == 2) {
-    if (check_arg_flag_version(1))
+    if (check_arg_flag(1, FLAG_VERSION))
       return show_version(APP_TITLE, INI_TOOLS_VERSION);
-    if (check_arg_flag_help(1))
+    if (check_arg_flag(1, FLAG_HELP))
       return show_help();
   }
+
+  if (check_arg(argv,1,"--delete-section") || check_arg(argv,1,"--delete-key")) {
+    if (check_arg(argv,1,"--delete-key")) {
+      bFlagDeleteKey = TRUE;
+    } else {
+      bFlagDeleteSection = TRUE;
+    }
+    firstArgIndex++;
+  }
+
 
   if (argc <= firstArgIndex+1)
     return show_error(STR_ERR_NO_KEY_NAME);
@@ -76,6 +92,15 @@ int main (int argc, char *argv[]) {
     return show_error(STR_ERR_INVALID_SECTION_NAME);
   if (!valid_key_name(name))
     return show_error(STR_ERR_INVALID_KEY_NAME);
+
+  if (bFlagDeleteKey) {
+    value = NULL;
+  }
+
+  if (bFlagDeleteSection) {
+    name = NULL;
+    value = NULL;
+  }
 
   n = ini_puts(section, name, value, inifn);
 
