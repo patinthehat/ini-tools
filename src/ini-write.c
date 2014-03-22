@@ -48,6 +48,7 @@ int main (int argc, char *argv[]) {
   int ret, firstArgIndex = 1;
   int bFlagDeleteSection = FALSE, bFlagDeleteKey = FALSE;
 
+  memset(databuf, 0, sizeof(databuf));
   application_init(argc, argv, arg_c, arg_v);
 
   if (argc <= 1) {
