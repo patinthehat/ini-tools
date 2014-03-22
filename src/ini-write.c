@@ -1,10 +1,7 @@
 #define CONFIG_H 1
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <sys/stat.h>
 
 #include "build-date.h"
 #include "globals.h"

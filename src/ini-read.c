@@ -94,7 +94,7 @@ int main (int argc, char *argv[]) {
 
   firstArgIndex = 1;  //first arg is index 1,
   if (bFlagBool || bFlagDump)
-    firstArgIndex++;  //unless -b is passed
+    firstArgIndex++;  //unless -b|-d is passed
 
   //--- start dump file processing ---
   if (bFlagDump) {
