@@ -10,7 +10,13 @@
 #include "config.h"
 #include "build-date.h"
 
-
+/**
+ * copies main(argc,argv) to global vars, initializes THIS_APP_FILENAME global var
+ * @param argc from main()
+ * @param argv from main()
+ * @param argc_global global var
+ * @param argv_global global var
+ */
 void application_init(int argc, char*argv[], int argc_global, char*argv_global[]) {
   int n;
 
@@ -23,7 +29,7 @@ void application_init(int argc, char*argv[], int argc_global, char*argv_global[]
 
 /**
  * checks if a file exists.
- * @arg char* filename
+ * @param char* filename
  * @return true if given file exists, otherwise false.
  */
 int file_exist (char *filename) {
@@ -36,7 +42,7 @@ int file_exist (char *filename) {
 
 /**
  * checks if specified file is readable.
- * @arg char* filename
+ * @param char* filename
  * @return int TRUE if readable, otherwise FALSE
  */
 int file_readable(char *filename) {
@@ -47,7 +53,7 @@ int file_readable(char *filename) {
 
 /**
  * checks if specified file is writable.
- * @arg char* filename
+ * @param char* filename
  * @return int TRUE if writable, otherwise FALSE
  */
 int file_writable(char *filename) {
@@ -106,6 +112,14 @@ int check_arg(char * argv[], int argn, char * value) {
   return FALSE;
 }
 
+/**
+ * checks argv[index] against an array of values
+ * @param argv
+ * @param index
+ * @param arr array of values to check for
+ * @param size size of arr
+ * @return int TRUE if argv[index] is one of arr[], otherwise FALSE
+ */
 int check_arg_char_array(char *argv[], int index, char * arr[], int size) {
   int ret, i;
   for(i = 0; i < size; i++)
@@ -113,6 +127,14 @@ int check_arg_char_array(char *argv[], int index, char * arr[], int size) {
   return ret;
 }
 
+/**
+ * checks argv[index] against an array of const values
+ * @param argv
+ * @param index
+ * @param arr array of values to check for
+ * @param size size of arr
+ * @return int TRUE if argv[index] is one of arr[], otherwise FALSE
+ */
 int check_arg_char_array_const(char *argv[], int index, char * const arr[], int size) {
   int ret, i;
   for(i = 0; i < size; i++)
@@ -120,6 +142,12 @@ int check_arg_char_array_const(char *argv[], int index, char * const arr[], int 
   return ret;
 }
 
+/**
+ * checks argv[index] for the given flag
+ * @param index argv index to check
+ * @param flag flag to check for
+ * @return int TRUE|FALSE
+ */
 int check_arg_flag(int index, enum application_flag flag) {
   switch(flag) {
     case FLAG_VERSION:
@@ -148,19 +176,38 @@ int check_arg_flag_bool(int index) {
   return check_arg_char_array(arg_v, index, ARGS_BOOL, ARGS_BOOL_COUNT);
 }
 
-
+/**
+ * checks if value==successValue and returns EXIT_SUCCESS, otherwise EXIT_FAILURE
+ * @param value
+ * @param successValue
+ * @return int EXIT_SUCCESS if value==successValue, otherwise EXIT_FAILURE
+ */
 int exit_return_value_success(int value, int successValue) {
   if (value == successValue)
     return EXIT_SUCCESS;
   return EXIT_FAILURE;
 }
 
+/**
+ * checks if value==failureValue and returns EXIT_FAILURE, otherwise EXIT_SUCCESS
+ * @param value
+ * @param failureValue
+ * @return int EXIT_FAILURE if value==failureValue, otherwise EXIT_SUCCESS
+ */
 int exit_return_value_failure(int value, int failureValue) {
   if (value == failureValue)
     return EXIT_FAILURE;
   return EXIT_SUCCESS;
 }
 
+/**
+ * checks value against other values to return EXIT_SUCCESS/FAILURE
+ * @param value
+ * @param successValue
+ * @param failureValue
+ * @param defaultValue
+ * @return int EXIT_SUCCESS if value==successValue,EXIT_FAILURE if value==failureValue, otherwise defaultValue
+ */
 int exit_return_value(int value, int successValue, int failureValue, int defaultValue) {
   if (value == failureValue)
     return EXIT_FAILURE;
@@ -169,10 +216,9 @@ int exit_return_value(int value, int successValue, int failureValue, int default
   return defaultValue;
 }
 
-
 /**
  * checks a string as a boolean value == true
- * @arg char* str string to check
+ * @param str string to check
  * returns true if str in [true,1,yes,on]
  */
 int is_bool_str_true(char *str) {
@@ -184,7 +230,7 @@ int is_bool_str_true(char *str) {
 
 /**
  * checks a string as a boolean value == false
- * @arg char* str string to check
+ * @param str string to check
  * returns true if str in [false,0,-1,no,off]
  */
 int is_bool_str_false(char *str) {
