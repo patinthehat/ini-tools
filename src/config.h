@@ -1,5 +1,5 @@
 
-#define APP_VERSION   "1.3"
+#define APP_VERSION   "1.4"
 #define BUFFER_SIZE   1024
 
 #define INI_TOOLS_VERSION   APP_VERSION
