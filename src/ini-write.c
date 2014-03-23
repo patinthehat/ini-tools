@@ -41,12 +41,11 @@ int show_help () {
 int main (int argc, char *argv[]) {
   char databuf[BUFFER_SIZE];
   char *section, *name, *value, *inifn;
-  long n;
+  long nWriteSuccess = 0;
   int ret, firstArgIndex = 1;
   int bFlagDeleteSection = FALSE, bFlagDeleteKey = FALSE;
 
-  memset(databuf, 0, sizeof(databuf));
-  application_init(argc, argv, arg_c, arg_v);
+  application_init(argc, argv, arg_c, arg_v, &databuf, BUFFER_SIZE);
 
   if (argc <= 1) {
     show_error(STR_ERR_NOT_ENOUGH_ARGS);
@@ -83,8 +82,8 @@ int main (int argc, char *argv[]) {
   value   = argv[firstArgIndex+2];
   inifn   = argv[firstArgIndex+3];
 
-  if (!file_writable(inifn))
-    return show_error_f1(STR_ERR_FMT_FILE_NOT_WRITABLE, basename(inifn));
+  if (file_exist(inifn) && !file_writable(inifn))
+    return show_error_fmt(STR_ERR_FMT_FILE_NOT_WRITABLE, basename(inifn));
 
   if (!valid_section_name(section))
     return show_error(STR_ERR_INVALID_SECTION_NAME);
@@ -92,16 +91,16 @@ int main (int argc, char *argv[]) {
     return show_error(STR_ERR_INVALID_KEY_NAME);
 
   if (bFlagDeleteKey) {
-    value = NULL;
+    value = NULL; //passing NULL to ini_puts() deletes the key
   }
 
   if (bFlagDeleteSection) {
-    name = NULL;
-    value = NULL;
+    name = NULL;  //passing NULL to ini_puts() deletes the entire section
+    value = NULL; //set to NULL for good measure even though it will be deleted anyway
   }
 
-  n = ini_puts(section, name, value, inifn);
+  nWriteSuccess = ini_puts(section, name, value, inifn);
 
-  ret = exit_return_value_failure(n, 0);
+  ret = exit_return_value_failure(nWriteSuccess, 0);
   return ret;
 }

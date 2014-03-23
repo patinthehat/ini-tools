@@ -24,7 +24,7 @@ char * THIS_APP_FILENAME;
   #undef CONFIG_H
   #define CONFIG_H 1
 
-  char* ARGS_VERSION[ARGS_VERSION_COUNT]  = {"-V", "-v", "--version", "--vers"};
+  char* ARGS_VERSION[ARGS_VERSION_COUNT]  = {"-V", "-v", "--version", "--v"};
   char* ARGS_HELP[ARGS_HELP_COUNT]        = {"-h", "--help"};
   char* ARGS_BOOL[ARGS_BOOL_COUNT]        = {"-b", "--bool", "--boolean"};
   char* ARGS_DUMP[ARGS_DUMP_COUNT]        = {"-d", "--dump"};

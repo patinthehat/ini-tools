@@ -19,3 +19,4 @@
 
 #define STR_ERR_FMT_FILE_NOT_READABLE     "File '%s' is not readable."
 #define STR_ERR_FMT_FILE_NOT_WRITABLE     "File '%s' is not writable."
+#define STR_ERR_FMT_SECTION_NOT_FOUND     "Section not found: %s"

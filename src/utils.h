@@ -8,6 +8,8 @@
 
   int show_error(char *msg);
 
+  int show_error_fmt(char * msgfmt, ...);
+
   int check_arg(char * argv[], int argn, char * value);
 
   int exit_return_value_success(int value, int successValue);

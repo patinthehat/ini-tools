@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
-//#include <sys/stat.h>
+#include <stdarg.h>
 
 #include "globals.h"
 #include "config.h"
@@ -17,7 +17,7 @@
  * @param argc_global global var
  * @param argv_global global var
  */
-void application_init(int argc, char*argv[], int argc_global, char*argv_global[]) {
+void application_init(int argc, char*argv[], int argc_global, char*argv_global[], char* buf, int bufSize) {
   int n;
 
   argc_global = argc;
@@ -25,6 +25,10 @@ void application_init(int argc, char*argv[], int argc_global, char*argv_global[]
    argv_global[n] = argv[n];
 
   THIS_APP_FILENAME = (char*)(strrchr(arg_v[0], '/') ? strrchr(arg_v[0], '/') + 1 : arg_v[0]);
+
+  if (buf != NULL && bufSize > 0) {
+    memset(buf, 0, bufSize);
+  }
 }
 
 /**
@@ -89,11 +93,30 @@ int show_error(char *msg) {
  * @param arg
  * @return int EXIT_FAILURE
  */
-int show_error_f1(char *msgfmt, void *arg) {
+/*int show_error_f1(char *msgfmt, void *arg) {
   char * buf;
   buf = malloc(strlen(msgfmt)+(sizeof(char)*11));
   sprintf(buf, "%s%s\n", STR_ERROR_PREFIX, msgfmt);
   fprintf(stderr, buf, arg);
+  free(buf);
+  return EXIT_FAILURE;
+}
+*/
+
+/**
+ * display a formatted error message, with any number of params.
+ * @param msgfmt
+ * @param ... variable number of parameters for formatting
+ * @return EXIT_FAILURE
+ */
+int show_error_fmt(char * msgfmt, ...) {
+  va_list args;
+  char * buf;
+  buf = malloc(strlen(msgfmt)+(sizeof(char)*(strlen(STR_ERROR_PREFIX)+2) ));
+  sprintf(buf, "%s%s\n", STR_ERROR_PREFIX, msgfmt);
+  va_start(args, msgfmt);
+  vfprintf(stderr, buf, args);
+  va_end (args);
   free(buf);
   return EXIT_FAILURE;
 }
@@ -269,4 +292,28 @@ int valid_key_name(char*keyName) {
   if (keyName == NULL || strlen(keyName) == 0 || !keyName)
     return FALSE;
   return TRUE;
+}
+
+/**
+ * checks given ini file for the specified [section].
+ * @param filename
+ * @param sectionName
+ * @return TRUE if the given section exists, otherwise FALSE
+ */
+int ini_section_exists(char * filename, char * sectionName) {
+  char buf[255];
+  memset(buf, 0, sizeof(buf));
+  int i = 0, ret = FALSE;
+
+  while(!ret) {
+    int ncopied = ini_getsection(i, buf, sizeof(buf), filename);
+    if (ncopied <= 0)
+      break;
+    if (strcasecmp(buf, sectionName)==0) {
+      ret = TRUE;
+      break;
+    }
+    i++;
+  }
+  return ret;
 }
