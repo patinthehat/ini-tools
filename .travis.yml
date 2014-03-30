@@ -3,9 +3,12 @@ language: c
 before_script:
  - sudo apt-get update
  - sudo apt-get install build-essential gcc 
- - sudo echo "#!/bin/sh" > /usr/bin/buildmsg
- - sudo echo " " >> /usr/bin/buildmsg
- - sudo echo "echo $1" >> /usr/bin/buildmsg
+ - mkdir "$HOME/scripts" 
+ - export PATH=.:$HOME/scripts:$PATH
+ - echo "#!/bin/sh" > $HOME/scripts/buildmsg
+ - echo " " >> $HOME/scripts/buildmsg
+ - echo "echo $1" >> $HOME/scripts/buildmsg
+ - ln -s buildmsg $HOME/scripts/buildmsg
 
 script: 
   - make all 
