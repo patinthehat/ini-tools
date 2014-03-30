@@ -2,7 +2,9 @@ language: c
 
 before_script:
  - sudo apt-get update
- - sudo apt-get install gcc build-deps 
+ - sudo apt-get install gcc build-dep
 
 script: 
   - make all 
+
+cache: apt
