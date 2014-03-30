@@ -1,4 +1,4 @@
-## ini-tools
+## ini-tools [![Build Status](https://travis-ci.org/patinthehat/ini-tools.svg?branch=master)](https://travis-ci.org/patinthehat/ini-tools)
   - command line tools to read and write ini files easily and quickly (i.e. in scripts).
 
 ----
