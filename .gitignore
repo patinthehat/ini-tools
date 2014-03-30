@@ -6,3 +6,6 @@ build/
 buildstrs.c
 *.o
 *.a
+
+boolstrs.c
+src/build-date.h
