@@ -8,7 +8,6 @@ before_script:
  - echo "#!/bin/sh" > $HOME/scripts/buildmsg
  - echo " " >> $HOME/scripts/buildmsg
  - echo "echo $1" >> $HOME/scripts/buildmsg
- - ln -s buildmsg $HOME/scripts/buildmsg
 
 script: 
   - make all 
