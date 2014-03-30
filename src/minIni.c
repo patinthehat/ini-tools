@@ -311,6 +311,7 @@ int ini_gets(const TCHAR *Section, const TCHAR *Key, const TCHAR *DefValue,
     ok = getkeystring(&fp, Section, Key, -1, -1, Buffer, BufferSize);
     (void)ini_close(&fp);
   } /* if */
+
   if (!ok)
     save_strncpy(Buffer, DefValue, BufferSize, QUOTE_NONE);
   return _tcslen(Buffer);

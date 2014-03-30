@@ -15,7 +15,7 @@
 #define INI_BUFFERSIZE 1024 * 2
 
 #define INI_FILETYPE                  FILE*
-#define ini_openread(filename,file)   ((*(file) = fopen((filename),"rb")) != NULL)
+#define ini_openread(filename,file)    ((*(file) = fopen((filename),"rb")) != NULL)
 #define ini_openwrite(filename,file)  ((*(file) = fopen((filename),"wb")) != NULL)
 #define ini_close(file)               (fclose(*(file)) == 0)
 #define ini_read(buffer,size,file)    (fgets((buffer),(size),*(file)) != NULL)

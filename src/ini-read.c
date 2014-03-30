@@ -130,6 +130,8 @@ int main (int argc, char *argv[]) {
   //--- start dump file processing ---
   if (bFlagDump) {
     inifn   = argv[firstArgIndex];
+    if (strcmp(inifn, "-")==0)
+      inifn = "/dev/stdin";
     if (!file_exist(inifn))
       return show_error(STR_ERR_FILE_NOT_FOUND);
     if (!file_readable(inifn))
@@ -163,12 +165,14 @@ int main (int argc, char *argv[]) {
   section = argv[firstArgIndex+0];
   name    = argv[firstArgIndex+1];
   inifn   = argv[firstArgIndex+2];
+  if (strcmp(inifn, "-")==0)
+    inifn = "/dev/stdin";
 
   // -- start sanity checking --
   if (!file_exist(inifn))
     return show_error(STR_ERR_FILE_NOT_FOUND);
 
-  if (file_exist(inifn) && !file_readable(inifn))
+  if ((file_exist(inifn) && !file_readable(inifn)) )
     return show_error_fmt(STR_ERR_FMT_FILE_NOT_READABLE, basename(inifn));
 
   if (!valid_section_name(section))
