@@ -1,13 +1,13 @@
 language: c
 
 before_script:
- - sudo apt-get update
- - sudo apt-get install build-essential gcc 
+ - sudo apt-get install build-essential
  - mkdir "$HOME/scripts" 
  - export PATH=.:$HOME/scripts:$PATH
  - echo "#!/bin/sh" > $HOME/scripts/buildmsg
  - echo " " >> $HOME/scripts/buildmsg
  - echo "echo $1" >> $HOME/scripts/buildmsg
+ - chmod +x $HOME/scripts/buildmsg
 
 script: 
   - make all 
