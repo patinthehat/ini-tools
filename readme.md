@@ -63,7 +63,7 @@ newkey3=myvalue
 
 ` `
 
-  + `ini-write Last key4 "new key" test.ini` | write key4 with a value of "new key" to section Last.
+  `ini-write Last key4 "new key" test.ini` | write key4 with a value of "new key" to section Last.
 
 
 ---
