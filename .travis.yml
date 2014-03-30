@@ -3,6 +3,9 @@ language: c
 before_script:
  - sudo apt-get update
  - sudo apt-get install build-essential gcc 
+ - sudo echo "#!/bin/sh" > /usr/bin/buildmsg
+ - sudo echo " " >> /usr/bin/buildmsg
+ - sudo echo "echo $1" >> /usr/bin/buildmsg
 
 script: 
   - make all 
