@@ -2,7 +2,7 @@ language: c
 
 before_script:
  - sudo apt-get update
- - sudo apt-get install gcc build-dep
+ - sudo apt-get install build-essential gcc 
 
 script: 
   - make all 
