@@ -82,7 +82,7 @@ int main (int argc, char *argv[]) {
   value   = argv[firstArgIndex+2];
   inifn   = argv[firstArgIndex+3];
   if (strcmp(inifn,"-")==0)
-    inifn = "/dev/stdout";
+    inifn = "/dev/stdout";  //TODO modify minIni to support reading from stdin and using stdin data for writing
 
   if (file_exist(inifn) && !file_writable(inifn))
     return show_error_fmt(STR_ERR_FMT_FILE_NOT_WRITABLE, basename(inifn));

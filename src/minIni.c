@@ -621,6 +621,20 @@ int ini_puts(const TCHAR *Section, const TCHAR *Key, const TCHAR *Value, const T
   TCHAR LocalBuffer[INI_BUFFERSIZE];
   int len, match, flag, cachelen;
 
+  //TODO modify minIni to support reading from stdin and using stdin data for writing
+  if (strcmp(Filename,"/dev/stdout")==0 || strcmp(Filename,"-")==0) {
+    //if (!ini_openwrite(Filename, &wfp))
+    //  return 0;
+
+    writesection(LocalBuffer, Section, &stdout);
+    writekey(LocalBuffer, Key, Value, &stdout);
+
+    printf("%s", (char*)LocalBuffer);
+
+    //(void)ini_close(&wfp);
+
+    return 1;
+  }
   assert(Filename != NULL);
   if (!ini_openread(Filename, &rfp)) {
     /* If the .ini file doesn't exist, make a new file */
